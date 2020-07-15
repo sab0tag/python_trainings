@@ -1,29 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-Задание №1: Подготовить инфраструктуру и создать первый работающий тест
-Повторить действия, которые были продемонстрированы в лекциях:
-
-Создать новый репозиторий на GitHub и клонировать его на локальную машину.
-Создать новый проект в среде разработки PyCharm.
-Записать в рекордере сценарий для создания новой группы в адресной книге.
-Перевести сценарий на язык Python и перенести его в среду разработки.
-В этот момент можно уложить промежуточные результаты работы в репозиторий.
-Создать виртуальное окружение (virtualenv) и установить в него дополнительные библиотеки selenium и pytest.
-Настроить проект в среде разработки на использование созданного виртуального окружения.
-Настроить среду разработки на использование тестового фреймворка py.test.
-Загрузить и установить вспомогательный исполняемый файл geckodriver.
-Убедиться в том, что созданный тест успешно выполняется как из консоли, так и из среды разработки.
-И снова можно уложить результаты работы в репозиторий. Делайте это после каждого успешного шага.
-А если что-то сломалось -- можно отменить изменения, вернуться к предыдущему работающему состоянию, и попробовать ещё раз.
-
-"""
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest, time as t
 
 class AppDynamicsJob(unittest.TestCase):
     def setUp(self):
@@ -38,6 +17,7 @@ class AppDynamicsJob(unittest.TestCase):
     def test_app_dynamics_job(self):
         driver = self.driver
         driver.get("http://localhost:8080/addressbook/index.php")
+        t.sleep(2)
         driver.find_element_by_name("user").click()
         driver.find_element_by_name("user").clear()
         driver.find_element_by_name("user").send_keys("admin")
@@ -79,8 +59,6 @@ class AppDynamicsJob(unittest.TestCase):
         finally: self.accept_next_alert = True
 
     def tearDown(self):
-        # To know more about the difference between verify and assert,
-        # visit https://www.seleniumhq.org/docs/06_test_design_considerations.jsp#validating-results
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
