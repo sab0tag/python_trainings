@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
+
 class AppDynamicsJob(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
@@ -13,10 +14,18 @@ class AppDynamicsJob(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
 
-    def test_app_dynamics_job(self):
-        driver = self.driver
+    def open_login_page(self, driver):
         driver.get("http://localhost:8080/addressbook/index.php")
-        self.login(driver)
+
+    def login(self, driver):
+        driver.find_element_by_name("user").clear()
+        driver.find_element_by_name("user").send_keys("admin")
+        driver.find_element_by_name("pass").clear()
+        driver.find_element_by_name("pass").send_keys("secret")
+        driver.find_element_by_xpath("//input[@value='Login']").click()
+
+    def add_usr(self, driver):
+        # create a new user
         driver.find_element_by_link_text("add new").click()
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
@@ -56,25 +65,34 @@ class AppDynamicsJob(unittest.TestCase):
         driver.find_element_by_name("address2").clear()
         driver.find_element_by_name("address2").send_keys("Lenina")
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+
+    def return_to_home_page(self, driver):
         driver.find_element_by_link_text("home page").click()
+
+    def logout(self, driver):
+        # logout part
         driver.find_element_by_link_text("Logout").click()
 
-    def login(self, driver):
-        # login into a Address book
-        driver.find_element_by_name("user").clear()
-        driver.find_element_by_name("user").send_keys("admin")
-        driver.find_element_by_name("pass").clear()
-        driver.find_element_by_name("pass").send_keys("secret")
-        driver.find_element_by_xpath("//input[@value='Login']").click()
+    def add_user(self):
+        driver = self.driver
+        self.open_login_page(driver)
+        self.login(driver)
+        self.add_usr(driver)
+        self.return_to_home_page(driver)
+        self.logout(driver)
 
     def is_element_present(self, how, what):
-        try: self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
+        try:
+            self.driver.find_element(by=how, value=what)
+        except NoSuchElementException as e:
+            return False
         return True
 
     def is_alert_present(self):
-        try: self.driver.switch_to_alert()
-        except NoAlertPresentException as e: return False
+        try:
+            self.driver.switch_to_alert()
+        except NoAlertPresentException as e:
+            return False
         return True
 
     def close_alert_and_get_its_text(self):
@@ -86,10 +104,12 @@ class AppDynamicsJob(unittest.TestCase):
             else:
                 alert.dismiss()
             return alert_text
-        finally: self.accept_next_alert = True
+        finally:
+            self.accept_next_alert = True
 
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
+
 
 if __name__ == "__main__":
     unittest.main()
