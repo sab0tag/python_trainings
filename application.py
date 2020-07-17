@@ -1,31 +1,51 @@
 # -*- coding: utf-8 -*-
+# вспомогательные методы тестового класса
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
 
 
-class AppDynamicsJob(unittest.TestCase):
-    def setUp(self):
+class Application:
+
+    def __init__(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "https://www.google.com/"
-        self.verificationErrors = []
-        self.accept_next_alert = True
 
-    def open_login_page(self, driver):
+    def open_home_page(self):
+        driver = self.driver
         driver.get("http://localhost:8080/addressbook/index.php")
 
-    def login(self, driver, username, password):
+    def login(self, user, pwd):
+        driver = self.driver
+        self.open_home_page()
+        driver.find_element_by_name("user").click()
         driver.find_element_by_name("user").clear()
-        driver.find_element_by_name("user").send_keys(username)
+        driver.find_element_by_name("user").send_keys(user)
         driver.find_element_by_name("pass").clear()
-        driver.find_element_by_name("pass").send_keys(password)
+        driver.find_element_by_name("pass").send_keys(pwd)
         driver.find_element_by_xpath("//input[@value='Login']").click()
 
-    def add_usr(self, driver, name, surname, nick, titl, company_name, street, mobile_number, email_1, email_2, b_day,
-                b_month, b_year, street2):
+    def open_groups_page(self):
+        driver = self.driver
+        driver.find_element_by_link_text("groups").click()
+
+    def create_group(self, group):
+        driver = self.driver
+        self.open_groups_page()
+        driver.find_element_by_name("new").click()
+        driver.find_element_by_name("group_name").click()
+        driver.find_element_by_name("group_name").clear()
+        # fill group form
+        driver.find_element_by_name("group_name").send_keys(group.groupName)
+        driver.find_element_by_name("group_header").clear()
+        driver.find_element_by_name("group_header").send_keys(group.headerDescr)
+        driver.find_element_by_name("group_footer").clear()
+        driver.find_element_by_name("group_footer").send_keys(group.footerDescr)
+        # submit group creation
+        driver.find_element_by_name("submit").click()
+        self.return_to_groups_page()
+
+    def add_usr(self, name, surname, nick, titl, company_name, street, mobile_number, email_1, email_2, b_day, b_month, b_year, street2):
+        driver = self.driver
         # create a new user
         driver.find_element_by_link_text("add new").click()
         driver.find_element_by_name("firstname").click()
@@ -63,63 +83,19 @@ class AppDynamicsJob(unittest.TestCase):
         driver.find_element_by_name("address2").clear()
         driver.find_element_by_name("address2").send_keys(street2)
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.return_to_home_page()
 
-    def return_to_home_page(self, driver):
+    def return_to_groups_page(self):
+        driver = self.driver
+        driver.find_element_by_link_text("group page").click()
+
+    def return_to_home_page(self):
+        driver = self.driver
         driver.find_element_by_link_text("home page").click()
 
-    def logout(self, driver):
-        # logout part
+    def logout(self):
+        driver = self.driver
         driver.find_element_by_link_text("Logout").click()
 
-    def add_user(self):
-        driver = self.driver
-        self.open_login_page(driver)
-        self.login(driver, username="admin", password="secret")
-        self.add_usr(driver, name="Igor", surname="Petrenko", nick="sab0tag", titl="QA Engineer", company_name="Luxoft",
-                     street="Mayakovskogo avenue", mobile_number="+380661530460", email_1="sabotag1985@gmail.com",
-                     email_2="ihor.petrenko@yahoo.com", b_day="2", b_month="November", b_year="1985", street2="Lenina")
-        self.return_to_home_page(driver)
-        self.logout(driver)
-
-    def add_user(self):
-        driver = self.driver
-        self.open_login_page(driver)
-        self.login(driver, username="admin", password="secret")
-        self.add_usr(driver, name="", surname="", nick="", titl="", company_name="",
-                     street="", mobile_number="", email_1="",
-                     email_2="", b_day="", b_month="", b_year="", street2="")
-        self.return_to_home_page(driver)
-        self.logout(driver)
-
-    def is_element_present(self, how, what):
-        try:
-            self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.driver.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally:
-            self.accept_next_alert = True
-
-    def tearDown(self):
-        self.assertEqual([], self.verificationErrors)
-
-
-if __name__ == "__main__":
-    unittest.main()
+    def destroy(self):
+        self.driver.quit()
