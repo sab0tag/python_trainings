@@ -1,6 +1,5 @@
-class Users:
-    def __init__(self, name, surname, nick, titl, company_name, street, mobile_number, email_1, email_2, b_day,
-                 b_month, b_year, street2):
+class User:
+    def __init__(self, name, surname, nick, titl, company_name, street, mobile_number, email_1, email_2, b_day, b_month, b_year, street2):
         self.name = name
         self.surname = surname
         self.nick = nick
