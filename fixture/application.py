@@ -2,6 +2,7 @@
 # вспомогательные методы тестового класса
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+from fixture.session import SessionHelper
 
 
 class Application:
@@ -9,20 +10,11 @@ class Application:
     def __init__(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
     def open_home_page(self):
         driver = self.driver
         driver.get("http://localhost:8080/addressbook/index.php")
-
-    def login(self, user, pwd):
-        driver = self.driver
-        self.open_home_page()
-        driver.find_element_by_name("user").click()
-        driver.find_element_by_name("user").clear()
-        driver.find_element_by_name("user").send_keys(user)
-        driver.find_element_by_name("pass").clear()
-        driver.find_element_by_name("pass").send_keys(pwd)
-        driver.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_groups_page(self):
         driver = self.driver
@@ -93,10 +85,6 @@ class Application:
     def return_to_home_page(self):
         driver = self.driver
         driver.find_element_by_link_text("home page").click()
-
-    def logout(self):
-        driver = self.driver
-        driver.find_element_by_link_text("Logout").click()
 
     def destroy(self):
         self.driver.quit()
