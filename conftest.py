@@ -2,7 +2,7 @@ import pytest
 from fixture.application import Application
 
 # fixture init
-@pytest.fixture(scope = "session")
+@pytest.fixture()
 def app(request):
     fixture = Application()
     # destroy fixture

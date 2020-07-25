@@ -1,20 +1,5 @@
 # -*- coding: utf-8 -*-
-import pytest
 from model.usr import User
-from fixture.application import Application
-
-
-@pytest.fixture
-# fixture init
-def app(request):
-    fixture = Application()
-    # вызов параметра; внутри передается функция, которая будет вызвана для разрушения фикстуры
-    request.addfinalizer(fixture.destroy)
-    return fixture
-
-    # тестовые методы в качестве параметра будут принимать фикстуру
-    # при вызове тестового метода будет передан обьект, созданный функцией app
-    #
 
 
 def test_add_user(app):

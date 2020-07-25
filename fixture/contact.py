@@ -5,9 +5,18 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_main_page(self):
+        driver = self.app.driver
+        driver.find_element_by_link_text("home").click()
+
     def add_usr(self, usr):  # add a new contact
         driver = self.app.driver
         # create a new user
+        self.fill_contact_form(usr)
+        self.open_main_page()
+
+    def fill_contact_form(self, usr):
+        driver = self.app.driver
         driver.find_element_by_link_text("add new").click()
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
@@ -44,8 +53,16 @@ class ContactHelper:
         driver.find_element_by_name("address2").clear()
         driver.find_element_by_name("address2").send_keys(usr.street2)
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.return_to_home_page()
 
-    def return_to_home_page(self):
+    def edit_contact(self, usr):  # exit existing contacts
         driver = self.app.driver
-        driver.find_element_by_link_text("home page").click()
+        self.open_main_page()
+        driver.find_element_by_name("selected[]").click()
+        driver.find_element_by_xpath('//*[@id="maintable"]/tbody/tr[2]/td[8]/a/img')
+        self.fill_contact_form(usr)
+
+    def delete_contact(self):
+        driver = self.app.driver
+        driver.find_element_by_name("selected[]").click()
+        driver.find_element_by_css_selector("#content > form:nth-child(10) > div:nth-child(8) > input[type=button]")
+        self.open_main_page()
