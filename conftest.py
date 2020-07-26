@@ -5,6 +5,7 @@ from fixture.application import Application
 @pytest.fixture()
 def app(request):
     fixture = Application()
+    app.session.login(user="admin", pwd="secret")
     # destroy fixture
     request.addfinalizer(fixture.destroy)
     return fixture
