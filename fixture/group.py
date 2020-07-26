@@ -17,31 +17,37 @@ class GroupHelper:
         driver.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
-    def modify_first_group(self, group):
+    def modify_first_group(self, new_group_data):
         driver = self.app.driver
         self.open_groups_page()
-        # find 1st element in list
-        # select checkbox
-        # hit "Edit Group" button
-        driver.find_element_by_name("selected[]").click()
+        self.select_first_group()
         driver.find_element_by_name("edit").click()
-        self.fill_group_form(group)
-        # submit update procedure
+        self.fill_group_form(new_group_data)
         driver.find_element_by_name("update").click()
         self.return_to_groups_page()
 
+    def select_first_group(self):
+        driver = self.app.driver
+        driver.find_element_by_name("selected[]").click()
+
     def fill_group_form(self, group):
         driver = self.app.driver
-        driver.find_element_by_name("group_name").send_keys(group.groupName)
-        driver.find_element_by_name("group_header").clear()
-        driver.find_element_by_name("group_header").send_keys(group.headerDescr)
-        driver.find_element_by_name("group_footer").clear()
-        driver.find_element_by_name("group_footer").send_keys(group.footerDescr)
+        self.change_field_value("group_name", group.groupName)
+        self.change_field_value("group_header", group.headerDescr)
+        self.change_field_value("group_footer", group.footerDescr)
+
+
+    def change_field_value(self, field_name, text):
+        driver = self.app.driver
+        if text is not None:
+            driver.find_element_by_name(field_name).click()
+            driver.find_element_by_name(field_name).clear()
+            driver.find_element_by_name(field_name).send_keys(text)
 
     def delete_first_group(self):
         driver = self.app.driver
         self.open_groups_page()
-        driver.find_element_by_name("selected[]").click()
+        self.select_first_group()
         driver.find_element_by_name("delete").click()
         self.return_to_groups_page()
 
