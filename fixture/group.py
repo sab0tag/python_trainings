@@ -26,16 +26,11 @@ class GroupHelper:
         driver.find_element_by_name("update").click()
         self.return_to_groups_page()
 
-    def select_first_group(self):
-        driver = self.app.driver
-        driver.find_element_by_name("selected[]").click()
-
     def fill_group_form(self, group):
         driver = self.app.driver
         self.change_field_value("group_name", group.groupName)
         self.change_field_value("group_header", group.headerDescr)
         self.change_field_value("group_footer", group.footerDescr)
-
 
     def change_field_value(self, field_name, text):
         driver = self.app.driver
@@ -44,6 +39,10 @@ class GroupHelper:
             driver.find_element_by_name(field_name).clear()
             driver.find_element_by_name(field_name).send_keys(text)
 
+    def select_first_group(self):
+        driver = self.app.driver
+        driver.find_element_by_name("selected[]").click()
+
     def delete_first_group(self):
         driver = self.app.driver
         self.open_groups_page()
@@ -51,7 +50,11 @@ class GroupHelper:
         driver.find_element_by_name("delete").click()
         self.return_to_groups_page()
 
-
     def return_to_groups_page(self):
         driver = self.app.driver
         driver.find_element_by_link_text("group page").click()
+
+    def count(self):
+        driver = self.app.driver
+        self.open_groups_page()
+        return len(driver.find_elements_by_name("selected[]"))

@@ -1,8 +1,21 @@
 from model.usr import User
 
-def test_modify_contact(app):
-    app.session.login(user="admin", pwd="secret")
-    app.contact.add_usr(User(name="John", surname="Dow", nick="ranger", titl="Fireman", company_name="Resque team",
-                             street="Willard avenue", mobile_number="+380753727384", email_1="sabotag1985@gmail.com",
-                             email_2="ihor.petrenko@yahoo.com", b_day="10", b_month="November", b_year="1964", street2="Lakeroad"))
-    app.session.logout()
+
+def test_modify_contact_name(app):
+    check_if_not_empty(app)
+    app.contact.modify_contact(User(name="Jason"))
+
+
+def test_modify_contact_phone_number(app):
+    check_if_not_empty(app)
+    app.contact.modify_contact(User(mobile_number="+380661234567"))
+
+
+def test_modify_contact_email(app):
+    check_if_not_empty(app)
+    app.contact.modify_contact(User(email_1="test@mail.ru"))
+
+
+def check_if_not_empty(app):
+    if app.contact.count() == 0:
+        app.contact.create_contact(User(name="Darren"))
