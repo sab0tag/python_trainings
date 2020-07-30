@@ -1,6 +1,7 @@
 import pytest
 from fixture.application import Application
 
+
 # init global variable
 fixture = None
 
@@ -23,7 +24,6 @@ def stop(request):
     def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
-
     # destroy fixture
     request.addfinalizer(fin)
     return fixture

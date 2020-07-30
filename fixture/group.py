@@ -5,14 +5,19 @@ class GroupHelper:
 
     def open_groups_page(self):
         driver = self.app.driver
-        driver.find_element_by_link_text("groups").click()
+        if not (driver.current_url.endswith("/groups.php") and len(driver.find_elements_by_name("new")) > 0):
+            driver.find_element_by_link_text("groups").click()
+
+    def return_to_groups_page(self):
+        driver = self.app.driver
+        driver.find_element_by_link_text("group page").click()
 
     def create(self, group):
         driver = self.app.driver
         self.open_groups_page()
         driver.find_element_by_name("new").click()
-        driver.find_element_by_name("group_name").click()
-        driver.find_element_by_name("group_name").clear()
+        # driver.find_element_by_name("group_name").click()
+        # driver.find_element_by_name("group_name").clear()
         self.fill_group_form(group)
         driver.find_element_by_name("submit").click()
         self.return_to_groups_page()
@@ -49,10 +54,6 @@ class GroupHelper:
         self.select_first_group()
         driver.find_element_by_name("delete").click()
         self.return_to_groups_page()
-
-    def return_to_groups_page(self):
-        driver = self.app.driver
-        driver.find_element_by_link_text("group page").click()
 
     def count(self):
         driver = self.app.driver
