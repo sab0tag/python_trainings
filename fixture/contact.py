@@ -21,7 +21,7 @@ class ContactHelper:
         self.open_contact_page()
         driver.find_element_by_link_text("add new").click()
         self.fill_contact_form(usr)
-        driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        driver.find_element_by_name("submit").click()
         self.return_to_home_page()
 
     def modify_contact(self, new_contact_data):
@@ -63,10 +63,9 @@ class ContactHelper:
         self.select_first_contact()
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         driver.switch_to.alert.accept()
-        time.sleep(3)
+        time.sleep(5)
         driver.find_element_by_link_text("home").click()
 
-    
     def count(self):
         driver = self.app.driver
         self.open_contact_page()
@@ -76,8 +75,7 @@ class ContactHelper:
         driver = self.app.driver
         self.open_contact_page()
         contacts_list = []
-        for element in driver.find_elements_by_css_selector("tr") \
-                       and driver.find_elements_by_css_selector("tr.odd"):
+        for element in driver.find_elements_by_css_selector("tr tr.od"):
             text = element.text
             id = element.find_element_by_name("selected[]").get_attribute("value")
             contacts_list.append(User(name=text, id=id))

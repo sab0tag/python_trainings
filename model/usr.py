@@ -19,13 +19,15 @@ class User:
         self.b_year = b_year
         self.street2 = street2
         self.id = id
-'''
-    def __repr__(self):
-        return "%s %s" % (self.id, self.name)
 
+    # строковое представление объекта памяти
+    def __repr__(self):
+        return "%s:%s:%s" % (self.id, self.name, self.surname)
+
+    # функция для сравнения объектов по логическому критерию
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name
-
+'''
     def id_or_max(self):
         if self.id:
             return int(self.id)

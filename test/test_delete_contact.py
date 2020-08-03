@@ -7,4 +7,6 @@ def test_delete_contact(app):
     old_contacts_lst = app.contact.get_contacts_list()
     app.contact.delete_contact()
     new_contacts_list = app.contact.get_contacts_list()
-    assert len(old_contacts_lst) - 1 == len(new_contacts_list)
+    assert len(old_contacts_lst) - 1 == len(new_contacts_list) # сравнение длинны списков после удаления объекта
+    old_contacts_lst[0:1] = []
+    assert old_contacts_lst == new_contacts_list
