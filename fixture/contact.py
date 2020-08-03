@@ -23,6 +23,7 @@ class ContactHelper:
         self.fill_contact_form(usr)
         driver.find_element_by_name("submit").click()
         self.return_to_home_page()
+        self.group_cache = None
 
     def modify_contact(self, new_contact_data):
         driver = self.app.driver
@@ -32,6 +33,7 @@ class ContactHelper:
         self.fill_contact_form(new_contact_data)
         driver.find_element_by_name("update").click()
         self.return_to_home_page()
+        self.group_cache = None
 
     def fill_contact_form(self, usr):
         driver = self.app.driver
@@ -65,19 +67,22 @@ class ContactHelper:
         driver.switch_to.alert.accept()
         time.sleep(5)
         driver.find_element_by_link_text("home").click()
+        self.group_cache = None
 
     def count(self):
         driver = self.app.driver
         self.open_contact_page()
         return len(driver.find_elements_by_name("selected[]"))
-
+    
+    group_cache = None
     def get_contacts_list(self):
-        driver = self.app.driver
-        self.open_contact_page()
-        contacts_list = []
-        for element in driver.find_elements_by_css_selector("tr:nth-child(n+2)"):
-            id = element.find_element_by_name("selected[]").get_attribute("id")
-            name = element.find_elements_by_tag_name("td")[2].text
-            surname = element.find_elements_by_tag_name("td")[1].text
-            contacts_list.append(User(id=id, name=name, surname=surname))
-        return contacts_list
+        if self.group_cache is None:
+            driver = self.app.driver
+            self.open_contact_page()
+            self.group_cache = []
+            for element in driver.find_elements_by_css_selector("tr:nth-child(n+2)"):
+                id = element.find_element_by_name("selected[]").get_attribute("id")
+                name = element.find_elements_by_tag_name("td")[2].text
+                surname = element.find_elements_by_tag_name("td")[1].text
+                self.group_cache.append(User(id=id, name=name, surname=surname))
+        return list(self.group_cache)
