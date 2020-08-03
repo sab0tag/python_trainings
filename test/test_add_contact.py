@@ -1,3 +1,5 @@
+__author__ = "Igor Petrenko"
+
 # -*- coding: utf-8 -*-
 from model.usr import User
 

@@ -1,3 +1,5 @@
+__author__ = "Igor Petrenko"
+
 from model.usr import User
 
 

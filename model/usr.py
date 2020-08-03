@@ -1,10 +1,11 @@
-# from sys import maxsize
+from sys import maxsize
 
 
 class User:
 
     def __init__(self, name=None, surname=None, nick=None, titl=None, company_name=None, street=None,
-                 mobile_number=None, email_1=None, email_2=None, b_day=None, b_month=None, b_year=None, street2=None, id=None):
+                 mobile_number=None, email_1=None, email_2=None, b_day=None, b_month=None, b_year=None,
+                 street2=None, id=None):
         self.name = name
         self.surname = surname
         self.nick = nick
@@ -22,14 +23,18 @@ class User:
 
     # строковое представление объекта памяти
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.name, self.surname)
+        return "%s : %s : %s" % (self.id, self.name, self.surname)
 
     # функция для сравнения объектов по логическому критерию
+    # добавлено правило сравнения записей, в случае если идентификатор записи в результате не определен
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name
-'''
+        return (self.id is None or other.id is None or self.id == other.id) \
+               and (self.name is None or other.name is None or self.name == other.name)\
+               and (self.surname is None or other.surname is None or self.surname == other.surname)
+
+    # вычисление ключа по контакту для сравнения
     def id_or_max(self):
         if self.id:
             return int(self.id)
         else:
-            return maxsize '''
+            return maxsize
