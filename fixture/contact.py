@@ -1,26 +1,37 @@
+from model.usr import User
+import time
+
+
 class ContactHelper:
+
     def __init__(self, app):
         self.app = app
 
     def open_contact_page(self):
         driver = self.app.driver
-        if not (driver.current_url.endswith("/index.php") and len(driver.find_elements_by_name("user")) > 0):
+        if not (driver.current_url.endswith("/index.php")):
             driver.find_element_by_link_text("home").click()
+
+    def return_to_home_page(self):
+        driver = self.app.driver
+        driver.find_element_by_link_text("home page").click()
 
     def create_contact(self, usr):  # add a new contact
         driver = self.app.driver
+        self.open_contact_page()
         driver.find_element_by_link_text("add new").click()
         self.fill_contact_form(usr)
         driver.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.open_contact_page()
+        self.return_to_home_page()
 
     def modify_contact(self, new_contact_data):
         driver = self.app.driver
+        self.open_contact_page()
         self.select_first_contact()
         driver.find_element_by_xpath('//a[img/@src="icons/pencil.png"]').click()
         self.fill_contact_form(new_contact_data)
         driver.find_element_by_name("update").click()
-        self.open_contact_page()
+        self.return_to_home_page()
 
     def fill_contact_form(self, usr):
         driver = self.app.driver
@@ -50,11 +61,24 @@ class ContactHelper:
     def delete_contact(self):
         driver = self.app.driver
         self.select_first_contact()
-        driver.find_element_by_css_selector("#content > form:nth-child(10) > div:nth-child(8) > input[type=button]")
-        self.open_contact_page()
+        driver.find_element_by_xpath("//input[@value='Delete']").click()
+        driver.switch_to.alert.accept()
+        time.sleep(3)
+        driver.find_element_by_link_text("home").click()
 
+    
     def count(self):
         driver = self.app.driver
         self.open_contact_page()
         return len(driver.find_elements_by_name("selected[]"))
 
+    def get_contacts_list(self):
+        driver = self.app.driver
+        self.open_contact_page()
+        contacts_list = []
+        for element in driver.find_elements_by_css_selector("tr") \
+                       and driver.find_elements_by_css_selector("tr.odd"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts_list.append(User(name=text, id=id))
+        return contacts_list
