@@ -23,17 +23,26 @@ class ContactHelper:
         self.fill_contact_form(usr)
         driver.find_element_by_name("submit").click()
         self.return_to_home_page()
-        self.group_cache = None
+        self.contact_cache = None
 
-    def modify_contact(self, new_contact_data):
+    def select_contacts_by_index(self, index):
+        driver = self.app.driver
+        driver.find_elements_by_name("selected[]")[index].click()
+        pass
+
+    def modify_first_contact(self, new_contact_data):
+        driver = self.app.driver
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, new_contact_data):
         driver = self.app.driver
         self.open_contact_page()
-        self.select_first_contact()
+        self.select_contacts_by_index(index)
         driver.find_element_by_xpath('//a[img/@src="icons/pencil.png"]').click()
         self.fill_contact_form(new_contact_data)
         driver.find_element_by_name("update").click()
         self.return_to_home_page()
-        self.group_cache = None
+        self.contact_cache = None
 
     def fill_contact_form(self, usr):
         driver = self.app.driver
@@ -60,29 +69,34 @@ class ContactHelper:
         driver = self.app.driver
         driver.find_element_by_name("selected[]").click()
 
-    def delete_contact(self):
+    def delete_first_group(self):
         driver = self.app.driver
-        self.select_first_contact()
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
+        driver = self.app.driver
+        self.open_contact_page()
+        self.select_contacts_by_index(index)
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         driver.switch_to.alert.accept()
         time.sleep(5)
         driver.find_element_by_link_text("home").click()
-        self.group_cache = None
+        self.contact_cache = None
 
     def count(self):
         driver = self.app.driver
         self.open_contact_page()
         return len(driver.find_elements_by_name("selected[]"))
-    
-    group_cache = None
+
+    contact_cache = None
     def get_contacts_list(self):
-        if self.group_cache is None:
+        if self.contact_cache is None:
             driver = self.app.driver
             self.open_contact_page()
-            self.group_cache = []
+            self.contact_cache = []
             for element in driver.find_elements_by_css_selector("tr:nth-child(n+2)"):
                 id = element.find_element_by_name("selected[]").get_attribute("id")
                 name = element.find_elements_by_tag_name("td")[2].text
                 surname = element.find_elements_by_tag_name("td")[1].text
-                self.group_cache.append(User(id=id, name=name, surname=surname))
-        return list(self.group_cache)
+                self.contact_cache.append(User(id=id, name=name, surname=surname))
+        return list(self.contact_cache)
