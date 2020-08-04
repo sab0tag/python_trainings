@@ -24,6 +24,7 @@ class ContactHelper:
         driver.find_element_by_name("submit").click()
         self.return_to_home_page()
         self.contact_cache = None
+        self.group_cache = None
 
     def select_contacts_by_index(self, index):
         driver = self.app.driver
@@ -89,6 +90,7 @@ class ContactHelper:
         return len(driver.find_elements_by_name("selected[]"))
 
     contact_cache = None
+
     def get_contacts_list(self):
         if self.contact_cache is None:
             driver = self.app.driver
