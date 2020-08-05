@@ -23,14 +23,15 @@ class User:
 
     # строковое представление объекта памяти
     def __repr__(self):
-        return "%s : %s : %s" % (self.id, self.name, self.surname)
+        return "%s:%s:%s" % (self.id, self.name, self.surname)
 
     # функция для сравнения объектов по логическому критерию
     # добавлено правило сравнения записей, в случае если идентификатор записи в результате не определен
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) \
-               and (self.name is None or other.name is None or self.name == other.name)\
-               and (self.surname is None or other.surname is None or self.surname == other.surname)
+               and (self.name is None or other.name is None or self.name == other.name) \
+               and (self.surname is None or other.surname is None or self.surname == other.surname) \
+
 
     # вычисление ключа по контакту для сравнения
     def id_or_max(self):

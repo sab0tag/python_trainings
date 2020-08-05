@@ -24,14 +24,8 @@ class ContactHelper:
         driver.find_element_by_name("submit").click()
         self.return_to_home_page()
         self.contact_cache = None
-        self.group_cache = None
 
-    def select_contacts_by_index(self, index):
-        driver = self.app.driver
-        driver.find_elements_by_name("selected[]")[index].click()
-        pass
-
-    def modify_first_contact(self, new_contact_data):
+    def modify_first_contact(self):
         driver = self.app.driver
         self.modify_contact_by_index(0)
 
@@ -39,8 +33,10 @@ class ContactHelper:
         driver = self.app.driver
         self.open_contact_page()
         self.select_contacts_by_index(index)
+        # open modification form by clicking on pencil icon
         driver.find_element_by_xpath('//a[img/@src="icons/pencil.png"]').click()
         self.fill_contact_form(new_contact_data)
+        # submit action
         driver.find_element_by_name("update").click()
         self.return_to_home_page()
         self.contact_cache = None
@@ -70,6 +66,10 @@ class ContactHelper:
         driver = self.app.driver
         driver.find_element_by_name("selected[]").click()
 
+    def select_contacts_by_index(self, index):
+        driver = self.app.driver
+        driver.find_elements_by_name("selected[]")[index].click()
+
     def delete_first_group(self):
         driver = self.app.driver
         self.delete_contact_by_index(0)
@@ -97,8 +97,8 @@ class ContactHelper:
             self.open_contact_page()
             self.contact_cache = []
             for element in driver.find_elements_by_css_selector("tr:nth-child(n+2)"):
-                id = element.find_element_by_name("selected[]").get_attribute("id")
+                _id = element.find_element_by_name("selected[]").get_attribute("id")
                 name = element.find_elements_by_tag_name("td")[2].text
                 surname = element.find_elements_by_tag_name("td")[1].text
-                self.contact_cache.append(User(id=id, name=name, surname=surname))
+                self.contact_cache.append(User(name=name, surname=surname, id=_id))
         return list(self.contact_cache)
