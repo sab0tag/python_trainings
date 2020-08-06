@@ -26,7 +26,6 @@ class ContactHelper:
         self.contact_cache = None
 
     def modify_first_contact(self):
-        driver = self.app.driver
         self.modify_contact_by_index(0)
 
     def modify_contact_by_index(self, index, new_contact_data):
@@ -34,15 +33,14 @@ class ContactHelper:
         self.open_contact_page()
         self.select_contacts_by_index(index)
         # open modification form by clicking on pencil icon
-        driver.find_element_by_xpath('//a[img/@src="icons/pencil.png"]').click()
+        driver.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(new_contact_data)
         # submit action
-        driver.find_element_by_name("update").click()
+        driver.find_element_by_xpath("//input[@name='update'][2]").click()
         self.return_to_home_page()
         self.contact_cache = None
 
     def fill_contact_form(self, usr):
-        driver = self.app.driver
         self.change_field_value("firstname", usr.name)
         self.change_field_value("lastname", usr.surname)
         self.change_field_value("nickname", usr.nick)
@@ -71,17 +69,18 @@ class ContactHelper:
         driver.find_elements_by_name("selected[]")[index].click()
 
     def delete_first_group(self):
-        driver = self.app.driver
         self.delete_contact_by_index(0)
 
     def delete_contact_by_index(self, index):
         driver = self.app.driver
         self.open_contact_page()
         self.select_contacts_by_index(index)
+        # submit delete procedure
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         driver.switch_to.alert.accept()
-        time.sleep(5)
-        driver.find_element_by_link_text("home").click()
+        driver.find_elements_by_css_selector("div.msgbox")
+        self.return_to_home_page()
+        # driver.find_element_by_link_text("home").click()
         self.contact_cache = None
 
     def count(self):
