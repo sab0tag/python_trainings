@@ -1,5 +1,5 @@
 from model.usr import User
-import time
+import re
 
 
 class ContactHelper:
@@ -134,7 +134,19 @@ class ContactHelper:
 
     def open_contact_view_by_index (self, index):
         driver = self.app.driver
-        self.return_to_home_page()
+        self.open_contact_page()
         row = driver.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
+
+    def get_contacts_from_viewpage(self, index):
+        driver = self.app.driver
+        self.open_contact_view_by_index(index)
+        get_text = driver.find_element_by_id("content").text
+        homephone = re.search("H: (.*)", get_text).group(1)
+        mobile_number = re.search("M: (.*)", get_text).group(1)
+        workphone = re.search("W: (.*)", get_text).group(1)
+        secondaryphone = re.search("P: (.*)", get_text).group(1)
+        return User(homephone=homephone, mobile_number=mobile_number,
+                    workphone=workphone, secondaryphone=secondaryphone)
+
