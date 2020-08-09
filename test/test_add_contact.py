@@ -7,7 +7,7 @@ from model.usr import User
 def test_add_user(app):
     old_contacts_lst = app.contact.get_contacts_list()
     # определить локальную переменную для создания контакты
-    contact_ = User(name="Igor", surname="Petrenko")
+    contact_ = User(name="Igor", surname="Petrenko", homephone="123", workphone="231232", mobile_number="9887654", secondaryphone="299737")
     app.contact.create_contact(contact_)  # вызываем переменную в методе create_contact
     assert len(old_contacts_lst) + 1 == app.contact.count()  # where count() is a hash function
     new_contacts_lst = app.contact.get_contacts_list()

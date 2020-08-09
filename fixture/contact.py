@@ -12,6 +12,7 @@ class ContactHelper:
         if not (driver.current_url.endswith("/index.php")):
             driver.find_element_by_link_text("home").click()
 
+    # call method after the contact has been added
     def return_to_home_page(self):
         driver = self.app.driver
         driver.find_element_by_link_text("home page").click()
@@ -48,6 +49,10 @@ class ContactHelper:
         self.change_field_value("company", usr.company_name)
         self.change_field_value("address", usr.street)
         self.change_field_value("mobile", usr.mobile_number)
+        self.change_field_value("home", usr.homephone)
+        self.change_field_value("mobile", usr.mobile_number)
+        self.change_field_value("work", usr.workphone)
+        self.change_field_value("phone2", usr.secondaryphone)
         self.change_field_value("email", usr.email_1)
         self.change_field_value("email", usr.email_2)
         self.change_field_value("byear", usr.b_year)
@@ -89,15 +94,47 @@ class ContactHelper:
         return len(driver.find_elements_by_name("selected[]"))
 
     contact_cache = None
-
     def get_contacts_list(self):
         if self.contact_cache is None:
             driver = self.app.driver
             self.open_contact_page()
             self.contact_cache = []
             for element in driver.find_elements_by_css_selector("tr:nth-child(n+2)"):
+                cells = element.find_elements_by_tag_name("td")
                 _id = element.find_element_by_name("selected[]").get_attribute("id")
-                name = element.find_elements_by_tag_name("td")[2].text
-                surname = element.find_elements_by_tag_name("td")[1].text
-                self.contact_cache.append(User(name=name, surname=surname, id=_id))
+                surname = cells[1].text
+                name = cells[2].text
+                all_phones = cells[5].text.splitlines()
+                self.contact_cache.append(User(name=name, surname=surname, id=_id,
+                                               homephone=all_phones[0], mobile_number=all_phones[1],
+                                               workphone=all_phones[2], secondaryphone=all_phones[3]))
+
         return list(self.contact_cache)
+
+    def get_contacts_info_from_editpage(self, index):
+        driver = self.app.driver
+        self.open_contact_to_edit_by_index(index)
+        name = driver.find_element_by_name("firstname").get_attribute("value")
+        surname = driver.find_element_by_name("lastname").get_attribute("value")
+        id = driver.find_element_by_name("id").get_attribute("value")
+        homephone = driver.find_element_by_name("home").get_attribute("value")
+        workphone = driver.find_element_by_name("work").get_attribute("value")
+        mobile_number = driver.find_element_by_name("mobile").get_attribute("value")
+        secondaryphone = driver.find_element_by_name("phone2").get_attribute("value")
+        return User(name=name, surname=surname, id=id,
+                    homephone=homephone, mobile_number=mobile_number,
+                    workphone=workphone, secondaryphone=secondaryphone)
+
+    def open_contact_to_edit_by_index(self, index):
+        driver = self.app.driver
+        self.open_contact_page()
+        row = driver.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    def open_contact_view_by_index (self, index):
+        driver = self.app.driver
+        self.return_to_home_page()
+        row = driver.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[6]
+        cell.find_element_by_tag_name("a").click()
