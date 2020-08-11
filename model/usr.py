@@ -6,7 +6,7 @@ class User:
     def __init__(self, name=None, surname=None, nickname=None,id=None,
                  title=None, company=None, address=None,
                  mobile_number=None, homephone=None, workphone=None, secondaryphone=None, all_phones_from_homepage=None,
-                 email_1=None, email_2=None, email_3 = None, all_emails_from_homepage=None,
+                 email_1=None, email_2=None, email_3=None, all_emails_from_homepage=None,
                  b_day=None, b_month=None, b_year=None,
                  address2=None):
         self.name = name

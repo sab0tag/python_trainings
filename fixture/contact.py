@@ -107,12 +107,12 @@ class ContactHelper:
                 name = cells[2].text
                 # address = cells[3].text
                 # get list of all the emails from related cell 4
-                all_emails = cells[4].text.splitlines()
+                all_emails = cells[4].text
                 # get list of all the phones
                 all_phones = cells[5].text
                 self.contact_cache.append(User(id=_id, surname=surname, name=name,
                                                all_phones_from_homepage=all_phones,
-                                               email_1=all_emails[0], email_2=all_emails[1], email_3=all_emails[2]))
+                                               all_emails_from_homepage=all_emails))
         return list(self.contact_cache)
 
     # additional method; opens edit form
@@ -121,7 +121,7 @@ class ContactHelper:
         self.open_contact_to_edit_by_index(index)
         name = driver.find_element_by_name("firstname").get_attribute("value")
         surname = driver.find_element_by_name("lastname").get_attribute("value")
-        id = driver.find_element_by_name("id").get_attribute("value")
+        _id = driver.find_element_by_name("id").get_attribute("value")
         nickname = driver.find_element_by_name("nickname").get_attribute("value")
         company = driver.find_element_by_name("company").get_attribute("value")
         title = driver.find_element_by_name("title").get_attribute("value")
@@ -131,19 +131,24 @@ class ContactHelper:
         workphone = driver.find_element_by_name("work").get_attribute("value")
         mobile_number = driver.find_element_by_name("mobile").get_attribute("value")
         secondaryphone = driver.find_element_by_name("phone2").get_attribute("value")
-        email = driver.find_element_by_name("email").get_attribute("value")
-        email2 = driver.find_element_by_name("email2").get_attribute("value")
-        email3 = driver.find_element_by_name("email3").get_attribute("value")
         address2 = driver.find_element_by_name("address2").get_attribute("value")
         # define param=local variable
-        return User(name=name, surname=surname, id=id,  nickname=nickname, company=company, title=title,
+        return User(name=name, surname=surname, id=_id,  nickname=nickname, company=company, title=title,
                     address=address,
                     homephone=homephone, mobile_number=mobile_number,
                     workphone=workphone, secondaryphone=secondaryphone,
-                    email_1=email, email_2=email2, email_3=email3,  # usr.py
                     address2=address2)
 
-    #additional method; opens contacts view page
+    def get_emails_from_editpage(self, index):
+        driver = self.app.driver
+        self.open_contact_to_edit_by_index(index)
+        email = driver.find_element_by_name("email").get_attribute("value")
+        email2 = driver.find_element_by_name("email2").get_attribute("value")
+        email3 = driver.find_element_by_name("email3").get_attribute("value")
+        # define param=local variable
+        return User(email_1=email, email_2=email2, email_3=email3)  # usr.py
+
+    #additional method; opens contacts on view page
     def open_contact_to_edit_by_index(self, index):
         driver = self.app.driver
         self.open_contact_page()
@@ -159,16 +164,20 @@ class ContactHelper:
         cell.find_element_by_tag_name("a").click()
 
     def get_contacts_from_viewpage(self, index):
+            driver = self.app.driver
+            self.open_contact_view_by_index(index)
+            get_text = driver.find_element_by_id("content").text
+            homephone = re.search("H: (.*)", get_text).group(1)
+            mobile_number = re.search("M: (.*)", get_text).group(1)
+            workphone = re.search("W: (.*)", get_text).group(1)
+            secondaryphone = re.search("P: (.*)", get_text).group(1)
+            return User(homephone=homephone, mobile_number=mobile_number,
+                        workphone=workphone, secondaryphone=secondaryphone)
+
+    def get_emails_from_viewpage(self, index):
         driver = self.app.driver
         self.open_contact_view_by_index(index)
         get_text = driver.find_element_by_id("content").text
-        homephone = re.search("H: (.*)", get_text).group(1)
-        mobile_number = re.search("M: (.*)", get_text).group(1)
-        workphone = re.search("W: (.*)", get_text).group(1)
-        secondaryphone = re.search("P: (.*)", get_text).group(1)
-        email = re.search(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", get_text)
-        email2 = re.search(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", get_text).group(1)
-        email3 = re.search(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", get_text).group(1)
-        return User(homephone=homephone, mobile_number=mobile_number,
-                    workphone=workphone, secondaryphone=secondaryphone,
-                    email_1=email, email_2=email2, email_3=email3)
+        email, email2, email3 = re.findall('\S+@\S+', get_text)
+        return User(email_1=email, email_2=email2, email_3=email3)
+
