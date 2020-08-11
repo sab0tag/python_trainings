@@ -10,7 +10,7 @@ class Group:  # модель предметной области
         self.id = id
 
     def __repr__(self):
-        return "%s:%s" % (self.id, self.groupName)
+        return "%s:%s:%s:%s" % (self.id, self.groupName, self.headerDescr, self.footerDescr)
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) \
