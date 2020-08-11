@@ -44,19 +44,19 @@ class ContactHelper:
     def fill_contact_form(self, usr):
         self.change_field_value("firstname", usr.name)
         self.change_field_value("lastname", usr.surname)
-        self.change_field_value("nickname", usr.nick)
-        self.change_field_value("title", usr.titl)
-        self.change_field_value("company", usr.company_name)
-        self.change_field_value("address", usr.street)
-        self.change_field_value("mobile", usr.mobile_number)
+        self.change_field_value("nickname", usr.nickname)
+        self.change_field_value("title", usr.title)
+        self.change_field_value("company", usr.company)
+        self.change_field_value("address", usr.address)
         self.change_field_value("home", usr.homephone)
         self.change_field_value("mobile", usr.mobile_number)
         self.change_field_value("work", usr.workphone)
         self.change_field_value("phone2", usr.secondaryphone)
-        self.change_field_value("email", usr.email_1)
-        self.change_field_value("email", usr.email_2)
+        self.change_field_value("email", usr.email)
+        self.change_field_value("email2", usr.email2)
+        self.change_field_value("email3", usr.email3)
         self.change_field_value("byear", usr.b_year)
-        self.change_field_value("address2", usr.street2)
+        self.change_field_value("address2", usr.address2)
 
     def change_field_value(self, field_name, text):
         driver = self.app.driver
@@ -94,6 +94,7 @@ class ContactHelper:
         return len(driver.find_elements_by_name("selected[]"))
 
     contact_cache = None
+    # get contacts list method; read the table on the main page
     def get_contacts_list(self):
         if self.contact_cache is None:
             driver = self.app.driver
@@ -101,30 +102,48 @@ class ContactHelper:
             self.contact_cache = []
             for element in driver.find_elements_by_css_selector("tr:nth-child(n+2)"):
                 cells = element.find_elements_by_tag_name("td")
-                _id = element.find_element_by_name("selected[]").get_attribute("id")
+                _id = element.find_element_by_tag_name("input").get_attribute("value")
                 surname = cells[1].text
                 name = cells[2].text
-                all_phones = cells[5].text.splitlines()
-                self.contact_cache.append(User(name=name, surname=surname, id=_id,
-                                               homephone=all_phones[0], mobile_number=all_phones[1],
-                                               workphone=all_phones[2], secondaryphone=all_phones[3]))
-
+                # address = cells[3].text
+                # get list of all the emails from related cell 4
+                all_emails = cells[4].text.splitlines()
+                # get list of all the phones
+                all_phones = cells[5].text
+                self.contact_cache.append(User(id=_id, surname=surname, name=name,
+                                               all_phones_from_homepage=all_phones,
+                                               email_1=all_emails[0], email_2=all_emails[1], email_3=all_emails[2]))
         return list(self.contact_cache)
 
+    # additional method; opens edit form
     def get_contacts_info_from_editpage(self, index):
         driver = self.app.driver
         self.open_contact_to_edit_by_index(index)
         name = driver.find_element_by_name("firstname").get_attribute("value")
         surname = driver.find_element_by_name("lastname").get_attribute("value")
         id = driver.find_element_by_name("id").get_attribute("value")
+        nickname = driver.find_element_by_name("nickname").get_attribute("value")
+        company = driver.find_element_by_name("company").get_attribute("value")
+        title = driver.find_element_by_name("title").get_attribute("value")
+        address = driver.find_element_by_name("address").get_attribute("value")
+        # get all the phones from appropriate field
         homephone = driver.find_element_by_name("home").get_attribute("value")
         workphone = driver.find_element_by_name("work").get_attribute("value")
         mobile_number = driver.find_element_by_name("mobile").get_attribute("value")
         secondaryphone = driver.find_element_by_name("phone2").get_attribute("value")
-        return User(name=name, surname=surname, id=id,
+        email = driver.find_element_by_name("email").get_attribute("value")
+        email2 = driver.find_element_by_name("email2").get_attribute("value")
+        email3 = driver.find_element_by_name("email3").get_attribute("value")
+        address2 = driver.find_element_by_name("address2").get_attribute("value")
+        # define param=local variable
+        return User(name=name, surname=surname, id=id,  nickname=nickname, company=company, title=title,
+                    address=address,
                     homephone=homephone, mobile_number=mobile_number,
-                    workphone=workphone, secondaryphone=secondaryphone)
+                    workphone=workphone, secondaryphone=secondaryphone,
+                    email_1=email, email_2=email2, email_3=email3,  # usr.py
+                    address2=address2)
 
+    #additional method; opens contacts view page
     def open_contact_to_edit_by_index(self, index):
         driver = self.app.driver
         self.open_contact_page()
@@ -132,7 +151,7 @@ class ContactHelper:
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
 
-    def open_contact_view_by_index (self, index):
+    def open_contact_view_by_index(self, index):
         driver = self.app.driver
         self.open_contact_page()
         row = driver.find_elements_by_name("entry")[index]
@@ -147,6 +166,9 @@ class ContactHelper:
         mobile_number = re.search("M: (.*)", get_text).group(1)
         workphone = re.search("W: (.*)", get_text).group(1)
         secondaryphone = re.search("P: (.*)", get_text).group(1)
+        email = re.search(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", get_text)
+        email2 = re.search(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", get_text).group(1)
+        email3 = re.search(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", get_text).group(1)
         return User(homephone=homephone, mobile_number=mobile_number,
-                    workphone=workphone, secondaryphone=secondaryphone)
-
+                    workphone=workphone, secondaryphone=secondaryphone,
+                    email_1=email, email_2=email2, email_3=email3)
