@@ -5,11 +5,12 @@ from model.usr import User
 import pytest
 import random
 import string
+import master
 
 
 # gen random testdata
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " " * 10
+    symbols = string.ascii_letters + string.digits + string.ascii_lowercase + string.ascii_uppercase + " " * 10
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
