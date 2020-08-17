@@ -5,7 +5,6 @@ from model.usr import User
 import pytest
 import random
 import string
-import master
 
 
 # gen random testdata
