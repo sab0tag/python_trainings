@@ -1,6 +1,7 @@
 import pytest
 from fixture.application import Application
 import json
+import os.path
 
 # init global variable
 fixture = None
@@ -14,8 +15,9 @@ def app(request):
     global target
     browser = request.config.getoption("--browser")
     if target is None:
-        with open(request.config.getoption("--target")) as config_file:
-            target = json.load(config_file)
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))  # get the current directory for file
+        with open(config_file) as f:
+            target = json.load(f)
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=target['baseUrl'])  # constructor application
     fixture.session.ensure_login(user=target['username'], pwd=target['password'])
@@ -33,6 +35,7 @@ def stop(request):
     return fixture
 
 
+# add additional parameters inside of function; called once at the beginning ot the test run
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
