@@ -2,7 +2,7 @@ from model.group import Group
 import random
 import string
 import os.path  # define path to the file
-import json
+import jsonpickle
 import getopt  # read the command line options
 import sys  # get access to the command line options
 
@@ -43,4 +43,6 @@ testdata = [Group(groupName="", headerDescr="", footerDescr="")] + [
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)  # get the current directory for file
 # open it into a write mode
 with open(file, "w") as out_file:
-    out_file.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))  # func to convert object into a dict
+    jsonpickle.set_encoder_options("json", indent=2)
+    out_file.write(jsonpickle.encode(testdata))
+    # out_file.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))  # func to convert object into a dict
