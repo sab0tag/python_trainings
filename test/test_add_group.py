@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-import pytest
-from data.add_group import constant as testdata
+# import pytest
+# from data.groups import constant as testdata
 
 """
 testdata = Group(groupName=name, headerDescr=header, footerDescr=footer)
@@ -12,8 +12,9 @@ testdata = Group(groupName=name, headerDescr=header, footerDescr=footer)
 """
 
 
-@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
-def test_add_new_group(app, group):
+# @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+def test_add_new_group(app, data_groups): # group
+    group = data_groups
     old_group_lst = app.group.get_group_list()
     app.group.create(group)
     assert len(old_group_lst) + 1 == app.group.count()
