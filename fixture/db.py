@@ -12,7 +12,8 @@ class DbFixture:
         self.connection = pymysql.connect(host=host,
                                           user=user,
                                           passwd=password,
-                                          database=name)
+                                          database=name,
+                                          autocommit=True) # autocommit - reset cache after every request
 
     def get_group_list(self):
         lst = []
