@@ -1,6 +1,14 @@
 {
-	"baseUrl": "http://localhost:8080/addressbook/",
-	"username": "admin",
-	"password": "secret",
-	"browser": {"type": "firefox", "version": "35.0.1"}
+	"web": {
+		"baseUrl": "http://localhost/addressbook/",
+		"username": "admin",
+		"password": "secret"
+
+	},
+	"db": {
+		"host": "localhost",
+		"name": "addressbook",
+		"user": "root",
+		"password": ""
+	}
 }
