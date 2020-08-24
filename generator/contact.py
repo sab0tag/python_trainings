@@ -16,8 +16,8 @@ except getopt.GetoptError as err:
     sys.exit(2)
 
 # set default values
-n = 7
-f = "data/contacts.json"
+n = 7 # count of new created contacts
+f = "data/contacts.json" # file where all the contacts have to be saved
 
 for o, a in opts:
     if o == "-n":

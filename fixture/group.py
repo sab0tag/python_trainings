@@ -79,7 +79,6 @@ class GroupHelper:
         return len(driver.find_elements_by_name("selected[]"))
 
     group_cache = None
-
     def get_group_list(self):
         driver = self.app.driver
         if self.group_cache is None:

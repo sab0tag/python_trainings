@@ -84,7 +84,7 @@ class ContactHelper:
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         driver.switch_to.alert.accept()
         driver.find_elements_by_css_selector("div.msgbox")
-        self.return_to_home_page()
+        self.open_contact_page()
         # driver.find_element_by_link_text("home").click()
         self.contact_cache = None
 

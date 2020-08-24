@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+from data.groups import testdata
 # import pytest
 # from data.groups import constant as testdata
 
