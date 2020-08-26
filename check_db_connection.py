@@ -1,4 +1,21 @@
 import pymysql
+from fixture.db import dbfixture_
+
+db = dbfixture_(host="localhost",
+                name="addressbook",
+                user="root",
+                password="")
+try:
+    # get db grouplist
+    # grps = db.get_group_list()
+    contacts = db.get_contact_list()
+    for contact in contacts:
+        print(contact)
+    print(len(contacts))
+finally:
+    db.destroy()
+
+"""
 
 config = {
     'host': 'localhost',
@@ -20,3 +37,4 @@ try:
             print("Something wrong")
 finally:
     cnct.close()
+"""
