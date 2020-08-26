@@ -2,7 +2,7 @@ import pymysql
 from model.group import Group
 
 
-class DbFixture:
+class dbfixture_:
 
     def __init__(self, host, name, user, password):
         self.host = host
@@ -13,7 +13,7 @@ class DbFixture:
                                           user=user,
                                           passwd=password,
                                           database=name,
-                                          autocommit=True) # autocommit - reset cache after every request
+                                          autocommit=True) # autocommit - reset caching after every request
 
     def get_group_list(self):
         lst = []
@@ -27,5 +27,6 @@ class DbFixture:
             cursor.close()
         return lst
 
+    # call destroy method to close connection
     def destroy(self):
         self.connection.close()

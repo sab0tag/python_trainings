@@ -18,7 +18,7 @@ def test_add_new_group(app, db, json_groups): # db - test func param to work wit
     group = json_groups
     old_group_lst = db.get_group_list()
     app.group.create(group)
-    assert len(old_group_lst) + 1 == app.group.count()
+    # assert len(old_group_lst) + 1 == app.group.count()
     new_group_lst = db.get_group_list()
     old_group_lst.append(group)
     assert sorted(old_group_lst, key=Group.id_or_max) == sorted(new_group_lst, key=Group.id_or_max)
