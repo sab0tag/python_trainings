@@ -40,6 +40,18 @@ class GroupHelper:
         self.return_to_groups_page()
         self.group_cache = None
 
+    def modify_group_by_id(self, id, new_group_data):
+        driver = self.app.driver
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # open modification form
+        driver.find_element_by_name("edit").click()
+        self.fill_group_form(new_group_data)
+        # submit action
+        driver.find_element_by_name("update").click()
+        self.return_to_groups_page()
+        self.group_cache = None
+
     def fill_group_form(self, group):
         driver = self.app.driver
         self.change_field_value("group_name", group.groupName)
@@ -91,6 +103,7 @@ class GroupHelper:
         return len(driver.find_elements_by_name("selected[]"))
 
     group_cache = None
+
     def get_group_list(self):
         driver = self.app.driver
         if self.group_cache is None:

@@ -36,7 +36,7 @@ class dbfixture_:
             cursor.execute("select id, firstname, lastname from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:  # get the results - fetchall
                 (id, firsname, lastname) = row
-                lst.append(User(id=str(id), name=firsname, surname=lastname, ))
+                lst.append(User(id=str(id), name=firsname, surname=lastname))
         finally:
             cursor.close()
         return lst

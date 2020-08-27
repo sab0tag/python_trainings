@@ -1,21 +1,24 @@
 __author__ = "igor petrenko"
 
 from model.group import Group
-from random import randrange
+import random
 
 
-def test_modify_group_name(app):
-    if app.group.count() == 0:
+def test_modify_group_name(app, db, check_ui):
+    if len(db.get_group_list()) == 0:
         app.group.create(Group(groupName="New created name"))
-    old_group_list = app.group.get_group_list()
-    index = randrange(len(old_group_list))
-    group = Group(groupName="Updated group name")
-    group.id = old_group_list[index].id
-    app.group.modify_group_by_index(index, group)
-    new_group_lst = app.group.get_group_list()
-    assert len(old_group_list) == len(new_group_lst)
-    old_group_list[index] = group
-    assert sorted(old_group_list, key=Group.id_or_max) == sorted(new_group_lst, key=Group.id_or_max)
+    old_groups_list = db.get_group_list()
+    group = random.choice(old_groups_list)
+    new_group = Group(groupName="Updated group name")
+    app.group.modify_group_by_id(group.id, new_group)
+    new_groups_lst = db.get_group_list()
+
+    assert len(old_groups_list) == app.group.count()
+    group.groupName = new_group.groupName
+    assert old_groups_list == new_groups_lst
+
+    if check_ui:
+        assert sorted(new_groups_lst, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
 
 '''
