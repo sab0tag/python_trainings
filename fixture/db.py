@@ -33,10 +33,10 @@ class dbfixture_:
         lst = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname from addressbook where deprecated='0000-00-00 00:00:00'")
+            cursor.execute("select id, firstname, lastname, address, address2 from addressbook where deprecated='0000-00-00 00:00:00'")
             for row in cursor:  # get the results - fetchall
-                (id, firsname, lastname) = row
-                lst.append(User(id=str(id), name=firsname, surname=lastname))
+                (id, firstname, lastname, address, address2) = row
+                lst.append(User(id=str(id), name=firstname, surname=lastname, address=address, address2=address2))
         finally:
             cursor.close()
         return lst
