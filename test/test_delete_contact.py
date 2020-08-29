@@ -6,7 +6,7 @@ import random
 
 def test_delete_rand_contact(app, db, check_ui):
     if len(db.get_contact_list()) == 0:
-        app.contact.create_contact(User(name="Jason"))
+        app.contact.create_contact(User(name="Jason", surname="Williams"))
     old_contacts_lst = db.get_contact_list()
     contact = random.choice(old_contacts_lst)
     app.contact.delete_contact_by_id(contact.id)

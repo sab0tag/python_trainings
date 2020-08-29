@@ -1,5 +1,6 @@
 from model.usr import User
 import re
+from selenium.webdriver.support.ui import Select
 
 
 class ContactHelper:
@@ -209,3 +210,13 @@ class ContactHelper:
         get_text = driver.find_element_by_id("content").text
         email, email2, email3 = re.findall('\S+@\S+', get_text)
         return User(email_1=email, email_2=email2, email_3=email3)
+
+    def add_cont_to_group(self, cont_id, group_id, group_name):
+        driver = self.app.driver
+        self.open_contact_page()
+        self.select_contacts_by_id(cont_id)
+        driver.find_element_by_name("to_group").click()
+        driver.find_element_by_xpath("(//option[@value=%s])[2]" % group_id).click()
+        driver.find_element_by_name("add").click()
+        driver.find_element_by_link_text('group page "%s"' % group_name)
+        self.open_contact_page()
