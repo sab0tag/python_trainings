@@ -45,7 +45,7 @@ class ContactHelper:
     def modify_contact_by_id(self, id, new_contact_data):
         driver = self.app.driver
         self.open_contact_page()
-        self.select_contacts_by_id(id)
+        self.select_contact_by_id(id)
         # open modification form by clicking on pencil icon
         driver.find_element_by_css_selector("a[href='edit.php?id=%s" % id).click()
         self.fill_contact_form(new_contact_data)
@@ -86,9 +86,10 @@ class ContactHelper:
         driver = self.app.driver
         driver.find_elements_by_name("selected[]")[index].click()
 
-    def select_contacts_by_id(self, id):
+    def select_contact_by_id(self, id):
         driver = self.app.driver
         driver.find_element_by_css_selector("input[value='%s']" % id).click()
+
 
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
@@ -108,7 +109,7 @@ class ContactHelper:
     def delete_contact_by_id(self, id):
         driver = self.app.driver
         self.open_contact_page()
-        self.select_contacts_by_id(id)
+        self.select_contact_by_id(id)
         # submit delete procedure
         driver.find_element_by_xpath("//input[@value='Delete']").click()
         driver.switch_to.alert.accept()
@@ -214,9 +215,20 @@ class ContactHelper:
     def add_cont_to_group(self, cont_id, group_id, group_name):
         driver = self.app.driver
         self.open_contact_page()
-        self.select_contacts_by_id(cont_id)
+        self.select_contact_by_id(cont_id)
         driver.find_element_by_name("to_group").click()
         driver.find_element_by_xpath("(//option[@value=%s])[2]" % group_id).click()
         driver.find_element_by_name("add").click()
         driver.find_element_by_link_text('group page "%s"' % group_name)
         self.open_contact_page()
+
+    def remove_cont_from_group(self, contact_id, group_id, group_name):
+        driver = self.app.driver
+        self.open_contact_page()
+        driver.find_element_by_name("group").click()
+        driver.find_element_by_xpath("(//option[@value=%s])[1]" % group_id).click()
+        self.select_contact_by_id(contact_id)
+        driver.find_element_by_css_selector("div:nth-child(9) > input[type=submit]").click()
+        driver.find_element_by_link_text('group page "%s"' % group_name)
+        self.open_contact_page()
+
