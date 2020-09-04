@@ -3,12 +3,10 @@ from sys import maxsize
 
 class User:
 
-    def __init__(self, name=None, surname=None, nickname=None,id=None,
-                 title=None, company=None, address=None,
+    def __init__(self, name=None, surname=None, nickname=None, id=None, title=None, company=None, address=None,
                  mobile_number=None, homephone=None, workphone=None, secondaryphone=None, all_phones_from_homepage=None,
-                 email_1=None, email_2=None, email_3=None, all_emails_from_homepage=None,
-                 b_day=None, b_month=None, b_year=None,
-                 address2=None):
+                 email_1=None, email_2=None, email_3=None, all_emails_from_homepage=None, b_day=None, b_month=None,
+                 b_year=None, address2=None):
         self.name = name
         self.surname = surname
         self.nickname = nickname
@@ -32,12 +30,17 @@ class User:
 
     # строковое представление объекта памяти
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.name, self.surname)
+        return "%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s" % (self.id, self.name, self.surname, self.address,
+                                                           self.mobile_number, self.homephone, self.workphone, self.secondaryphone,
+                                                           self.email, self.email2, self.email3,
+                                                           self.all_phones_from_homepage,
+                                                           self.all_emails_from_homepage)
 
     # функция для сравнения объектов по логическому критерию
     # добавлено правило сравнения записей, в случае если идентификатор записи в результате не определен
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name and self.surname == other.surname
+        return (self.id is None or other.id is None or self.id == other.id) and self.name == other.name and self.surname == other.surname \
+        and self.address == other.address and self.all_phones_from_homepage == other.all_phones_from_homepage and self.all_emails_from_homepage == other.all_emails_from_homepage
 
     # вычисление ключа по контакту для сравнения
     def id_or_max(self):

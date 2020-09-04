@@ -7,7 +7,7 @@ from model.usr import User
 def test_add_user(app, db, json_contacts, check_ui):
     contact_ = json_contacts
     old_contacts_lst = db.get_contact_list()
-    app.contact.create_contact(contact_)  # вызываем переменную в методе create_contact
+    app.contact.create_contact(contact_)  # вызываем пzеременную в методе create_contact
     new_contacts_lst = db.get_contact_list()
     old_contacts_lst.append(contact_)  # добавление нового контакта в old_contact_lst
 

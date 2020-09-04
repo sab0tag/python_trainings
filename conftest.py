@@ -5,6 +5,7 @@ import importlib
 import jsonpickle
 from fixture.application import Application
 from fixture.db import dbfixture_
+from fixture.orm import ORMFixture
 
 # init global variable
 fixture = None
@@ -33,7 +34,7 @@ def app(request):
 
 
 @pytest.fixture(scope="session")
-def db(request): # request stores the options information during test run
+def db(request):  # request stores the options information during test run
     dbconfig = loadconfig(request.config.getoption("--target"))['db']
     dbfixture = dbfixture_(host=dbconfig['host'],
                            name=dbconfig['name'],
@@ -43,6 +44,16 @@ def db(request): # request stores the options information during test run
         dbfixture.destroy
     request.addfinalizer(fin)
     return dbfixture
+
+
+@pytest.fixture(scope="session")
+def orm(request):
+    dbconfig = loadconfig(request.config.getoption("--target"))['db']
+    ormfixture = ORMFixture(host=dbconfig['host'],
+                            name=dbconfig['name'],
+                            user=dbconfig['user'],
+                            password=dbconfig['password'])
+    return ormfixture
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -64,7 +75,7 @@ def check_ui(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
-    parser.addoption("--check_ui", action="store_true") # where action will be automatically true if flag is present;
+    parser.addoption("--check_ui", action="store_true")  # where action will be automatically true if flag is present;
 
 
 def pytest_generate_tests(metafunc):

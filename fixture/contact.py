@@ -212,10 +212,10 @@ class ContactHelper:
         email, email2, email3 = re.findall('\S+@\S+', get_text)
         return User(email_1=email, email_2=email2, email_3=email3)
 
-    def add_cont_to_group(self, cont_id, group_id, group_name):
+    def add_cont_to_group(self, contact_id, group_id, group_name):
         driver = self.app.driver
         self.open_contact_page()
-        self.select_contact_by_id(cont_id)
+        self.select_contact_by_id(contact_id)
         driver.find_element_by_name("to_group").click()
         driver.find_element_by_xpath("(//option[@value=%s])[2]" % group_id).click()
         driver.find_element_by_name("add").click()
@@ -226,7 +226,7 @@ class ContactHelper:
         driver = self.app.driver
         self.open_contact_page()
         driver.find_element_by_name("group").click()
-        driver.find_element_by_xpath("(//option[@value=%s])[1]" % group_id).click()
+        driver.find_element_by_xpath("(//option[@value=%s])" % group_id).click()
         self.select_contact_by_id(contact_id)
         driver.find_element_by_css_selector("div:nth-child(9) > input[type=submit]").click()
         driver.find_element_by_link_text('group page "%s"' % group_name)
