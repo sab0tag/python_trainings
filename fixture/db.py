@@ -1,9 +1,9 @@
-import pymysql
+import pymysql.cursors
 from model.group import Group
 from model.usr import User
 
 
-class dbfixture_:
+class DbFixture:
 
     def __init__(self, host, name, user, password):
         self.host = host
