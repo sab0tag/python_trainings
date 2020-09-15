@@ -1,6 +1,23 @@
-class Group: # модель предметной области
+from sys import maxsize
 
-    def __init__(self, groupName=None, headerDescr=None, footerDescr=None):
+
+class Group:  # модель предметной области
+
+    def __init__(self, groupName=None, headerDescr=None, footerDescr=None, id=None):
         self.groupName = groupName
         self.headerDescr = headerDescr
         self.footerDescr = footerDescr
+        self.id = id
+
+    def __repr__(self):
+        return "%s:%s:%s:%s" % (self.id, self.groupName, self.headerDescr, self.footerDescr)
+
+    def __eq__(self, other):
+        return (self.id is None or other.id is None or self.id == other.id) \
+               and self.groupName == other.groupName
+
+    def id_or_max(self):
+        if self.id:
+            return int(self.id)
+        else:
+            return maxsize
