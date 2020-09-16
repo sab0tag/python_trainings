@@ -1,0 +1,171 @@
+{
+  "uid" : "a332a8f6c58bea99",
+  "name" : "test_add_new_group[None:nameniwLr9E:header7czI5Tmno3NzXy:footerC8WffKiMcP]",
+  "fullName" : "test.test_add_group#test_add_new_group",
+  "historyId" : "c5d02c7dd1a6e874d1f54ae30e423a2f",
+  "time" : {
+    "start" : 1600232982653,
+    "stop" : 1600232985784,
+    "duration" : 3131
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "stop",
+    "time" : {
+      "start" : 1600232813072,
+      "stop" : 1600232813072,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "app",
+    "time" : {
+      "start" : 1600232982466,
+      "stop" : 1600232982640,
+      "duration" : 174
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "db",
+    "time" : {
+      "start" : 1600232826369,
+      "stop" : 1600232826373,
+      "duration" : 4
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "check_ui",
+    "time" : {
+      "start" : 1600232982640,
+      "stop" : 1600232982641,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "afterStages" : [ {
+    "name" : "stop::fin",
+    "time" : {
+      "start" : 1600233034747,
+      "stop" : 1600233035489,
+      "duration" : 742
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "db::fin",
+    "time" : {
+      "start" : 1600233035490,
+      "stop" : 1600233035490,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "test"
+  }, {
+    "name" : "suite",
+    "value" : "test_add_group"
+  }, {
+    "name" : "host",
+    "value" : "christina.local"
+  }, {
+    "name" : "thread",
+    "value" : "9118-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_add_group"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "json_groups",
+    "value" : "None:nameniwLr9E:header7czI5Tmno3NzXy:footerC8WffKiMcP"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ {
+      "uid" : "2fdb0de0f0f7ef11",
+      "status" : "passed",
+      "time" : {
+        "start" : 1600232509903,
+        "stop" : 1600232511322,
+        "duration" : 1419
+      }
+    }, {
+      "uid" : "30860f2a1b091d7",
+      "status" : "passed",
+      "time" : {
+        "start" : 1600231771463,
+        "stop" : 1600231773215,
+        "duration" : 1752
+      }
+    }, {
+      "uid" : "f9fe7934c0785730",
+      "status" : "broken",
+      "statusDetails" : "pymysql.err.OperationalError: (2003, \"Can't connect to MySQL server on 'localhost' ([Errno 61] Connection refused)\")",
+      "time" : {
+        "start" : 1600231369332,
+        "stop" : 1600231369332,
+        "duration" : 0
+      }
+    } ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "a332a8f6c58bea99.json",
+  "parameterValues" : [ "None:nameniwLr9E:header7czI5Tmno3NzXy:footerC8WffKiMcP" ]
+}

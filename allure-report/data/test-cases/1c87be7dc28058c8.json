@@ -1,0 +1,149 @@
+{
+  "uid" : "1c87be7dc28058c8",
+  "name" : "test_modify_rand_contact",
+  "fullName" : "test.test_modify_contact#test_modify_rand_contact",
+  "historyId" : "c3893a19c915a73fa954768c021fd894",
+  "time" : {
+    "start" : 1600233015582,
+    "stop" : 1600233019469,
+    "duration" : 3887
+  },
+  "status" : "failed",
+  "statusMessage" : "AssertionError: assert [21;idsfr;dsd...one;None, ...] == [21;idsfr;dsd...one;None, ...]\n  At index 18 diff: 89;Jason;surnameUCOsIxaM;address dKCdX WwPbruD7We1;None;None;None;None;None;None;None;None;None != 89;Jason;Low;address dKCdX WwPbruD7We1;None;None;None;None;None;None;None;None;None\n  Use -v to get the full diff",
+  "statusTrace" : "app = <fixture.application.Application object at 0x10210d130>, db = <fixture.db.dbfixture_ object at 0x10210da00>, check_ui = False\n\n    def test_modify_rand_contact(app, db, check_ui):\n        if len(db.get_contact_list()) == 0:\n            app.contact.create_contact(User(name=\"Loice\", surname=\"Armstrong\", email_1=\"skjdbkjbskjdbc@test.ru\", email_2=\"sdcljnljsndbcj@ya.ru\"))\n        old_contacts_list = db.get_contact_list()\n        contact = random.choice(old_contacts_list)\n        new_contact = User(name=\"Jason\", surname=\"Low\", email_1=\"ksbdcjkbkjbsdc@ru\", email_3=\"sdncjsbsdkbck@ya.ru\")\n        app.contact.modify_contact_by_id(contact.id, new_contact)\n        new_contacts_lst = db.get_contact_list()\n    \n        assert len(old_contacts_list) == app.contact.count()\n        contact.name = new_contact.name\n>       assert old_contacts_list == new_contacts_lst\nE       assert [21;idsfr;dsd...one;None, ...] == [21;idsfr;dsd...one;None, ...]\nE         At index 18 diff: 89;Jason;surnameUCOsIxaM;address dKCdX WwPbruD7We1;None;None;None;None;None;None;None;None;None != 89;Jason;Low;address dKCdX WwPbruD7We1;None;None;None;None;None;None;None;None;None\nE         Use -v to get the full diff\n\ntest/test_modify_contact.py:18: AssertionError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "app",
+    "time" : {
+      "start" : 1600233015390,
+      "stop" : 1600233015580,
+      "duration" : 190
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "stop",
+    "time" : {
+      "start" : 1600232813072,
+      "stop" : 1600232813072,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "check_ui",
+    "time" : {
+      "start" : 1600233015581,
+      "stop" : 1600233015581,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "db",
+    "time" : {
+      "start" : 1600232826369,
+      "stop" : 1600232826373,
+      "duration" : 4
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "afterStages" : [ {
+    "name" : "stop::fin",
+    "time" : {
+      "start" : 1600233034747,
+      "stop" : 1600233035489,
+      "duration" : 742
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "db::fin",
+    "time" : {
+      "start" : 1600233035490,
+      "stop" : 1600233035490,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "test"
+  }, {
+    "name" : "suite",
+    "value" : "test_modify_contact"
+  }, {
+    "name" : "host",
+    "value" : "christina.local"
+  }, {
+    "name" : "thread",
+    "value" : "9118-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_modify_contact"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "1c87be7dc28058c8.json",
+  "parameterValues" : [ ]
+}
