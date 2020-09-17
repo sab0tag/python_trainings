@@ -1,11 +1,13 @@
 from model.usr import User
-from model.group import Group
 import random
+from model.group import Group
 
 
 def test_delete_cont_from_group(app, orm):
     if len(orm.get_contact_list()) == 0:
         app.contact.create(User(name="Casey", surname="Neistat"))
+    if app.group.count() == 0:
+        app.group.create(Group(groupName="testname", headerDescr="header", footerDescr="footer"))
     # get rand contact
     contacts_lst = orm.get_contact_list()
     contact = random.choice(contacts_lst)
