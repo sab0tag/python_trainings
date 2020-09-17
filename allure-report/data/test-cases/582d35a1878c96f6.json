@@ -1,0 +1,104 @@
+{
+  "uid" : "582d35a1878c96f6",
+  "name" : "test_emails_on_contacts_viewpage",
+  "fullName" : "test.test_phones#test_emails_on_contacts_viewpage",
+  "historyId" : "e966218ef2949d91963b0b21526102b4",
+  "time" : {
+    "start" : 1600233033608,
+    "stop" : 1600233034709,
+    "duration" : 1101
+  },
+  "status" : "broken",
+  "statusMessage" : "ValueError: not enough values to unpack (expected 3, got 0)",
+  "statusTrace" : "app = <fixture.application.Application object at 0x10210d130>\n\n    def test_emails_on_contacts_viewpage(app):\n>       contact_from_viewpage = app.contact.get_emails_from_viewpage(0)\n\ntest/test_phones.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <fixture.contact.ContactHelper object at 0x1021d8cd0>, index = 0\n\n    def get_emails_from_viewpage(self, index):\n        driver = self.app.driver\n        self.open_contact_view_by_index(index)\n        get_text = driver.find_element_by_id(\"content\").text\n>       email, email2, email3 = re.findall('\\S+@\\S+', get_text)\nE       ValueError: not enough values to unpack (expected 3, got 0)\n\nfixture/contact.py:212: ValueError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "app",
+    "time" : {
+      "start" : 1600233033551,
+      "stop" : 1600233033607,
+      "duration" : 56
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "stop",
+    "time" : {
+      "start" : 1600232813072,
+      "stop" : 1600232813072,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "afterStages" : [ {
+    "name" : "stop::fin",
+    "time" : {
+      "start" : 1600233034747,
+      "stop" : 1600233035489,
+      "duration" : 742
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "test"
+  }, {
+    "name" : "suite",
+    "value" : "test_phones"
+  }, {
+    "name" : "host",
+    "value" : "christina.local"
+  }, {
+    "name" : "thread",
+    "value" : "9118-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_phones"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "582d35a1878c96f6.json",
+  "parameterValues" : [ ]
+}

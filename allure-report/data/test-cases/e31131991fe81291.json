@@ -1,0 +1,134 @@
+{
+  "uid" : "e31131991fe81291",
+  "name" : "test_contact_list",
+  "fullName" : "test.test_contacts_db_match_ui#test_contact_list",
+  "historyId" : "b534fade4e7541d7a799b245086c4a11",
+  "time" : {
+    "start" : 1600232996090,
+    "stop" : 1600233002758,
+    "duration" : 6668
+  },
+  "status" : "failed",
+  "statusMessage" : "AssertionError: assert [21;idsfr;dsd...st3@mail, ...] == [21;idsfr;dsd...e;None;;, ...]\n  At index 0 diff: 21;idsfr;dsdfsdfsdf;None;None;None;None;None;None;None;None;82748923\\n24823424422\\n82347837488\\n788234787488;te23@mail\\ntes22@mail\\nwefff@mail != 21;idsfr;dsdfsdfsdf;CA;None;None;None;None;None;None;None;;\n  Use -v to get the full diff",
+  "statusTrace" : "app = <fixture.application.Application object at 0x10210d130>, db = <fixture.db.dbfixture_ object at 0x10210da00>\n\n    def test_contact_list(app, db):\n        ui_list = app.contact.get_contacts_list()\n    \n        def clean(contact):\n            return User(id=contact.id,\n                        name=contact.name.strip(), surname=contact.surname.strip(),\n                        address=contact.address.strip(), address2=contact.address2.strip(),\n                        all_phones_from_homepage=merge_phones_(contact),\n                        all_emails_from_homepage=merge_emails_(contact))\n    \n        db_list = map(clean, db.get_contact_list())\n    \n        # compare the lists\n>       assert sorted(ui_list, key=User.id_or_max) == sorted(db_list, key=User.id_or_max)\nE       assert [21;idsfr;dsd...st3@mail, ...] == [21;idsfr;dsd...e;None;;, ...]\nE         At index 0 diff: 21;idsfr;dsdfsdfsdf;None;None;None;None;None;None;None;None;82748923\\n24823424422\\n82347837488\\n788234787488;te23@mail\\ntes22@mail\\nwefff@mail != 21;idsfr;dsdfsdfsdf;CA;None;None;None;None;None;None;None;;\nE         Use -v to get the full diff\n\ntest/test_contacts_db_match_ui.py:17: AssertionError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "app",
+    "time" : {
+      "start" : 1600232995837,
+      "stop" : 1600232996089,
+      "duration" : 252
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "stop",
+    "time" : {
+      "start" : 1600232813072,
+      "stop" : 1600232813072,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "db",
+    "time" : {
+      "start" : 1600232826369,
+      "stop" : 1600232826373,
+      "duration" : 4
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "afterStages" : [ {
+    "name" : "stop::fin",
+    "time" : {
+      "start" : 1600233034747,
+      "stop" : 1600233035489,
+      "duration" : 742
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "db::fin",
+    "time" : {
+      "start" : 1600233035490,
+      "stop" : 1600233035490,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "test"
+  }, {
+    "name" : "suite",
+    "value" : "test_contacts_db_match_ui"
+  }, {
+    "name" : "host",
+    "value" : "christina.local"
+  }, {
+    "name" : "thread",
+    "value" : "9118-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_contacts_db_match_ui"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "e31131991fe81291.json",
+  "parameterValues" : [ ]
+}

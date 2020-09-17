@@ -1,0 +1,98 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "name" : "categories",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: assert [21;idsfr;dsd...st3@mail, ...] == [21;idsfr;dsd...e;None;;, ...]\n  At index 0 diff: 21;idsfr;dsdfsdfsdf;None;None;None;None;None;None;None;None;82748923\\n24823424422\\n82347837488\\n788234787488;te23@mail\\ntes22@mail\\nwefff@mail != 21;idsfr;dsdfsdfsdf;CA;None;None;None;None;None;None;None;;\n  Use -v to get the full diff",
+      "children" : [ {
+        "name" : "test_contact_list",
+        "uid" : "e31131991fe81291",
+        "parentUid" : "7557caa695dcff443155267aca3db299",
+        "status" : "failed",
+        "time" : {
+          "start" : 1600232996090,
+          "stop" : 1600233002758,
+          "duration" : 6668
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "7557caa695dcff443155267aca3db299"
+    }, {
+      "name" : "AssertionError: assert [21;idsfr;dsd...one;None, ...] == [21;idsfr;dsd...one;None, ...]\n  At index 18 diff: 89;Jason;surnameUCOsIxaM;address dKCdX WwPbruD7We1;None;None;None;None;None;None;None;None;None != 89;Jason;Low;address dKCdX WwPbruD7We1;None;None;None;None;None;None;None;None;None\n  Use -v to get the full diff",
+      "children" : [ {
+        "name" : "test_modify_rand_contact",
+        "uid" : "1c87be7dc28058c8",
+        "parentUid" : "2ffdb43bd1571e19b102a3efc3a2b9cf",
+        "status" : "failed",
+        "time" : {
+          "start" : 1600233015582,
+          "stop" : 1600233019469,
+          "duration" : 3887
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "2ffdb43bd1571e19b102a3efc3a2b9cf"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  }, {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "AttributeError: 'Group' object has no attribute 'name'",
+      "children" : [ {
+        "name" : "test_delete_cont_from_group",
+        "uid" : "dec6697c9aeb67f4",
+        "parentUid" : "2ff5f7a4704279903fc7468b2fdd8199",
+        "status" : "broken",
+        "time" : {
+          "start" : 1600233004105,
+          "stop" : 1600233004194,
+          "duration" : 89
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "2ff5f7a4704279903fc7468b2fdd8199"
+    }, {
+      "name" : "AttributeError: 'NoneType' object has no attribute 'group'",
+      "children" : [ {
+        "name" : "test_phones_on_contacts_viewpage",
+        "uid" : "4fc7a81d23b38317",
+        "parentUid" : "4275126efd978a824e4c8f2963e9923f",
+        "status" : "broken",
+        "time" : {
+          "start" : 1600233032226,
+          "stop" : 1600233033512,
+          "duration" : 1286
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "4275126efd978a824e4c8f2963e9923f"
+    }, {
+      "name" : "ValueError: not enough values to unpack (expected 3, got 0)",
+      "children" : [ {
+        "name" : "test_emails_on_contacts_viewpage",
+        "uid" : "582d35a1878c96f6",
+        "parentUid" : "8b37fb4038c98830ecbd734132c076c1",
+        "status" : "broken",
+        "time" : {
+          "start" : 1600233033608,
+          "stop" : 1600233034709,
+          "duration" : 1101
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "8b37fb4038c98830ecbd734132c076c1"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ]
+}
